@@ -1,22 +1,26 @@
 package br.com.repositorio.blog.controllers;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import br.com.repositorio.blog.models.Post;
 import br.com.repositorio.blog.models.Usuario;
 import br.com.repositorio.blog.service.UsuarioService;
 
-@Controller
+@RestController
+@RequestMapping("usuario")
 public class UsuarioController {
 	@Autowired
-	UsuarioService usuarioService;
+	private UsuarioService usuarioService;
 	
-	@RequestMapping(value = "/usuario/{id}", method = RequestMethod.GET)
-	public ModelAndView encontrarPorId(@PathVariable("id") Integer id) {
+	@GetMapping(value = "{id}")
+	public ModelAndView encontrarPorId(@PathVariable Integer id) {
 		Usuario usuario = new Usuario();
 		usuario = usuarioService.findById(id);
 		
@@ -24,4 +28,12 @@ public class UsuarioController {
 		mv.addObject("usuario", usuario);
 		return mv;
 	}
+	
+	@GetMapping("posts/{id}")
+	public List<Post> encontrarTodosPosts(@PathVariable Integer id){
+		return usuarioService.findPostsByUsuarioId(id);
+	}
+	
+	
+	
 }

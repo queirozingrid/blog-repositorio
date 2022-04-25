@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.repositorio.blog.models.Post;
 import br.com.repositorio.blog.models.Usuario;
 import br.com.repositorio.blog.repositories.UsuarioRepository;
 import br.com.repositorio.blog.service.UsuarioService;
@@ -27,6 +28,11 @@ public class UsuarioServiceImpl implements UsuarioService{
 	@Override
 	public Usuario save(Usuario usuario) {
 		return usuarioRepository.save(usuario);
+	}
+
+	@Override
+	public List<Post> findPostsByUsuarioId(Integer id) {
+		return usuarioRepository.findPostsByUsuarioId(id);
 	}
 	
 	
